@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terréo</title>
+    <link rel="stylesheet" href="../styles/style.css2salas.css">
+    <link rel="stylesheet" href="../styles/style.cssQuadradoconfirmação.css">
+</head>
+
+<body>
+    <form id="sala-form" method="post" action="https://api.staticforms.xyz/submit">
+        <h1>Térreo</h1>
+        <p>Selecione o tipo de emergência:</p>
+        <label><input type="radio" name="emergencia" value="Acidente elétrico"> Acidente elétrico</label><br>
+        <label><input type="radio" name="emergencia" value="Ansiedade"> Ansiedade</label><br>
+        <label><input type="radio" name="emergencia" value="Convulsão"> Convulsão</label><br>
+        <label><input type="radio" name="emergencia" value="Corte profundo"> Corte profundo</label><br>
+        <label><input type="radio" name="emergencia" value="Desmaio"> Desmaio</label><br>
+        <label><input type="radio" name="emergencia" value="Incêndio"> Incêndio</label><br>
+        <label><input type="radio" name="emergencia" value="Mal-estar"> Mal-estar</label><br>
+        <label><input type="radio" name="emergencia" value="Fratura"> Fratura</label><br>
+
+        <p>Em qual sala você está?</p>
+        <label><input type="radio" name="sala" value="Recepção clínica odontológica"> Recepção clínica odontológica</label><br>
+        <label><input type="radio" name="sala" value="Laboratório de prótese"> Laboratório de prótese</label><br>
+        <label><input type="radio" name="sala" value="Laboratório pré-clínico 1"> Laboratório pré-clínico 1</label><br>
+        <label><input type="radio" name="sala" value="Laboratório pré-clínico 2"> Laboratório pré-clínico 2</label><br>
+        <label><input type="radio" name="sala" value="Central de material esterilizado"> Central de material esterilizado</label><br>
+        <label><input type="radio" name="sala" value="Clínica integrada A"> Clínica integrada A</label><br>
+        <label><input type="radio" name="sala" value="Clínica integrada B"> Clínica integrada B</label><br>
+        <label><input type="radio" name="sala" value="Clínica integrada C"> Clínica integrada C</label><br>
+        <label><input type="radio" name="sala" value="Central cirúrgico"> Central cirúrgico</label><br>
+        <label><input type="radio" name="sala" value="Auditório"> Auditório</label><br>
+        <label><input type="radio" name="sala" value="Radiologia"> Radiologia</label><br>
+
+        <div id="erro-sala" style="color: red; margin-top: 10px;"></div>
+        <div id="confirmacao-mensagem" style="display: none;">
+        <p>Deseja confirmar o envio da mensagem?</p>
+         <button type="button" id="confirmar-envio" class="botao-confirmar">Confirmar</button>
+         <button type="button" id="cancelar-envio" class="botao-cancelar">Cancelar</button>
+        </div>
+
+        <input type="hidden" name="accessKey" value="0cb3bf99-6426-4726-bce6-b8586ccabc95">
+        <input type="hidden" name="subject" value="Emergência no Bloco E/F, andar, Sala Selecionada">
+        <input type="hidden" name="redirectTo" value="https://msg-enviada.vercel.app">
+        <input type="submit" value="Confirmar">
+    </form>
+
+    <script>
+        const salaForm = document.getElementById('sala-form');
+        const erroSala = document.getElementById('erro-sala');
+        const confirmacaoMensagem = document.getElementById('confirmacao-mensagem');
+        const confirmarEnvio = document.getElementById('confirmar-envio');
+        const cancelarEnvio = document.getElementById('cancelar-envio');
+
+        salaForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const salaSelecionada = document.querySelector('input[name="sala"]:checked');
+            const tipoEmergenciaSelecionado = document.querySelector('input[name="emergencia"]:checked');
+
+            if (!salaSelecionada || !tipoEmergenciaSelecionado) {
+                erroSala.textContent = 'Por favor, selecione a sala e o tipo de emergência!';
+            } else {
+                erroSala.textContent = '';
+                const mensagemEmergencia = `Emergência no Bloco: E/F, Andar: Térreo, Sala: ${salaSelecionada.value}, Tipo de Emergência: ${tipoEmergenciaSelecionado.value}`;
+                const subjectInput = document.querySelector('input[name="subject"]');
+                subjectInput.value = mensagemEmergencia;
+                confirmacaoMensagem.style.display = 'block';
+            }
+        });
+
+        confirmarEnvio.addEventListener('click', function() {
+            const salaSelecionada = document.querySelector('input[name="sala"]:checked');
+            const tipoEmergenciaSelecionado = document.querySelector('input[name="emergencia"]:checked');
+            const mensagemEmergencia = `Emergência no Bloco: E/F, Andar: Térreo, Sala: ${salaSelecionada.value}, Tipo de Emergência: ${tipoEmergenciaSelecionado.value}`;
+            const subjectInput = document.querySelector('input[name="subject"]');
+            subjectInput.value = mensagemEmergencia;
+            salaForm.submit();
+        });
+
+        cancelarEnvio.addEventListener('click', function() {
+            confirmacaoMensagem.style.display = 'none';
+        });
+    </script>
+</body>
+</html>

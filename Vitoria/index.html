@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Escolha de Bloco</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div id="bloco-info">
+        <div id="bloco-options">
+            <h1>Hands On Rescue</h1>
+            <p>Em qual bloco você está?</p>
+            <input type="radio" name="bloco" id="blocoA" value="A"> Bloco A<br>
+            <input type="radio" name="bloco" id="blocoB" value="B"> Bloco B<br>
+            <input type="radio" name="bloco" id="blocoC" value="C"> Bloco C<br>
+            <input type="radio" name="bloco" id="blocoD" value="D"> Bloco D<br>
+            <input type="radio" name="bloco" id="blocoEF" value="E/F"> Bloco E/F<br>
+
+            <div id="mensagemAviso" style="color: red; margin-top: 20px;"></div>
+            <button type="submit"  id="proximo">Próximo</button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("proximo").addEventListener("click", function(event) {
+            event.preventDefault(); 
+
+            var blocoSelecionado = document.querySelector('input[name="bloco"]:checked');
+            if (blocoSelecionado) {
+                var valorBloco = blocoSelecionado.value;
+                if (valorBloco === "E/F") {
+                    window.location.href = "pages/escolhaandar.html";
+                } else {
+                    alert("O site está em atualização. Apenas o Bloco E/F está em funcionamento.");
+                }
+            } else {
+                document.getElementById("mensagemAviso").textContent = "Por favor, selecione um bloco.";
+            }
+        });
+    </script>
+</body>
+</html>
+
+
